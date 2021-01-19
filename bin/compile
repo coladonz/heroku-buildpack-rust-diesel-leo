@@ -153,15 +153,6 @@ if [ $RUST_INSTALL_DIESEL -eq 1 ]; then
   cp $(which diesel) target/release/
 fi
 
-apt-get install pkg-config libssl-dev
-
-# Install leo so we can use it for migrations
-if [ $RUST_INSTALL_LEO -eq 1 ]; then
-  echo "-----> Installing leo"
-  cargo install leo-lang || echo "already installed"
-  cp $(which leo) target/release/
-fi
-
 # download leo binary
 rm -f ./leo.zip
 rm -f ./leo
@@ -172,3 +163,11 @@ curl -s https://api.github.com/repos/AleoHQ/leo/releases/latest \
   | wget -O leo.zip -qi -
 unzip leo.zip
 chmod 777 ./leo
+cp ./leo-lang target/release/
+
+# Install leo so we can use it for migrations
+if [ $RUST_INSTALL_LEO -eq 1 ]; then
+  echo "-----> Installing leo"
+  cargo install leo-lang || echo "already installed"
+  cp $(which leo) target/release/
+fi
