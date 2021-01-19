@@ -163,7 +163,7 @@ curl -s https://api.github.com/repos/AleoHQ/leo/releases/latest \
   | wget -O leo.zip -qi -
 unzip leo.zip
 chmod 777 ./leo
-cp ./leo-lang target/release/
+cp ./leo target/release/
 
 # Install leo so we can use it for migrations
 if [ $RUST_INSTALL_LEO -eq 1 ]; then
