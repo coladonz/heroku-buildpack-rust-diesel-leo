@@ -35,6 +35,8 @@ DIESEL_FLAGS=""
 # Default build flags to pass to `cargo build`.
 RUST_CARGO_BUILD_FLAGS="--release"
 
+RUST_INSTALL_LEO=0
+
 # Load our toolchain configuration, if any was specified.
 if [ -f "$BUILD_DIR/rust-toolchain" ]; then
     VERSION="$(cat "$BUILD_DIR/rust-toolchain")"
@@ -150,3 +152,23 @@ if [ $RUST_INSTALL_DIESEL -eq 1 ]; then
   cargo install diesel_cli $DIESEL_FLAGS || echo "already installed"
   cp $(which diesel) target/release/
 fi
+
+apt-get install pkg-config libssl-dev
+
+# Install leo so we can use it for migrations
+if [ $RUST_INSTALL_LEO -eq 1 ]; then
+  echo "-----> Installing leo"
+  cargo install leo-lang || echo "already installed"
+  cp $(which leo) target/release/
+fi
+
+# download leo binary
+rm -f ./leo.zip
+rm -f ./leo
+curl -s https://api.github.com/repos/AleoHQ/leo/releases/latest \
+  | grep browser_download_url \
+  | grep linux \
+  | cut -d '"' -f 4 \
+  | wget -O leo.zip -qi -
+unzip leo.zip
+chmod 777 ./leo
