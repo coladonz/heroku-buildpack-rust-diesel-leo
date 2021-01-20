@@ -154,16 +154,16 @@ if [ $RUST_INSTALL_DIESEL -eq 1 ]; then
 fi
 
 # download leo binary
-rm -f ./leo.zip
-rm -f ./leo
-curl -s https://api.github.com/repos/AleoHQ/leo/releases/latest \
-  | grep browser_download_url \
-  | grep linux \
-  | cut -d '"' -f 4 \
-  | wget -O leo.zip -qi -
-unzip leo.zip
-chmod 777 ./leo
-cp ./leo target/release/
+# rm -f ./leo.zip
+# rm -f ./leo
+# curl -s https://api.github.com/repos/AleoHQ/leo/releases/latest \
+#   | grep browser_download_url \
+#   | grep linux \
+#   | cut -d '"' -f 4 \
+#   | wget -O leo.zip -qi -
+# unzip leo.zip
+# chmod 777 ./leo
+# cp ./leo target/release/
 
 # Install leo so we can use it for migrations
 if [ $RUST_INSTALL_LEO -eq 1 ]; then
